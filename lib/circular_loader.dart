@@ -21,6 +21,7 @@ class CircularLoaderComponent extends StatelessWidget {
       const EdgeInsets.only(bottom: 100, left: 10, right: 10, top: 10);
   final Decoration? loadingDecoration;
   final Widget? loadingWidget;
+  final Color? laodingBackgroundColor;
 
   const CircularLoaderComponent({
     Key? key,
@@ -30,6 +31,7 @@ class CircularLoaderComponent extends StatelessWidget {
     this.loadingBuilder,
     this.loadingDecoration,
     this.loadingWidget,
+    this.laodingBackgroundColor
   }) : super(key: key);
 
   @override
@@ -99,6 +101,7 @@ class CircularLoaderComponent extends StatelessWidget {
               ),
           child: IntrinsicHeight(
             child: Material(
+              color: laodingBackgroundColor ?? Colors.transparent,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
