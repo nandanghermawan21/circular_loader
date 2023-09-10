@@ -82,21 +82,21 @@ class CircularLoaderComponent extends StatelessWidget {
         alignment: laodingAlign,
         child: Container(
           margin: laodingMargin,
-          decoration: loadingDecoration ??
-              BoxDecoration(
-                color: Colors.white,
-                borderRadius: const BorderRadius.all(Radius.circular(5)),
-                border: Border.all(
-                  color: Colors.grey,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.shade400,
-                    blurRadius: 5,
-                    offset: const Offset(2, 2),
-                  )
-                ],
-              ),
+          // decoration: loadingDecoration ??
+          //     BoxDecoration(
+          //       color: Colors.white,
+          //       borderRadius: const BorderRadius.all(Radius.circular(5)),
+          //       border: Border.all(
+          //         color: Colors.grey,
+          //       ),
+          //       boxShadow: [
+          //         BoxShadow(
+          //           color: Colors.grey.shade400,
+          //           blurRadius: 5,
+          //           offset: const Offset(2, 2),
+          //         )
+          //       ],
+          //     ),
           child: IntrinsicHeight(
             child: Material(
               child: Column(
