@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   font_awesome_flutter: ^9.2.0
-  simple_html_css: ^4.0.0
+  flutter_super_html_viewer: ^0.1.0
   
 dev_dependencies:
   flutter_test:
