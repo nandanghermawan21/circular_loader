@@ -161,7 +161,7 @@ class CircularLoaderComponent extends StatelessWidget {
         child: Container(
           margin: const EdgeInsets.only(left: 40, right: 40),
           padding: const EdgeInsets.all(15),
-          width: 400,
+          width: successMessageWidth,
           decoration: successMessageDecoration ??
               BoxDecoration(
                 color: Colors.white,
