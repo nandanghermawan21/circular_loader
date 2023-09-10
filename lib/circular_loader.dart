@@ -22,17 +22,29 @@ class CircularLoaderComponent extends StatelessWidget {
   final Decoration? loadingDecoration;
   final Widget? loadingWidget;
   final Color? laodingBackgroundColor;
+  final Alignment errorMessageAlign = Alignment.center;
+  final double errorMessageWidth = 400;
+  final ObjectBuilder<Widget>? errorMessageWidget;
+  final Decoration? errorMessageDecoration;
+  final Alignment successMessageAlign = Alignment.center;
+  final double successMessageWidth = 400;
+  final ObjectBuilder<Widget>? successMessageWidget;
+  final Decoration? successMessageDecoration;
 
-  const CircularLoaderComponent(
-      {Key? key,
-      required this.controller,
-      this.child,
-      this.cover = true,
-      this.loadingBuilder,
-      this.loadingDecoration,
-      this.loadingWidget,
-      this.laodingBackgroundColor})
-      : super(key: key);
+  const CircularLoaderComponent({
+    Key? key,
+    required this.controller,
+    this.child,
+    this.cover = true,
+    this.loadingBuilder,
+    this.loadingDecoration,
+    this.loadingWidget,
+    this.laodingBackgroundColor,
+    this.errorMessageDecoration,
+    this.errorMessageWidget,
+    this.successMessageWidget,
+    this.successMessageDecoration,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -137,59 +149,30 @@ class CircularLoaderComponent extends StatelessWidget {
 
   Widget message(BuildContext context) {
     return Align(
-      alignment: Alignment.center,
+      alignment: successMessageAlign,
       child: Container(
         margin: const EdgeInsets.only(left: 40, right: 40),
         padding: const EdgeInsets.all(15),
         width: 400,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: const BorderRadius.all(Radius.circular(5)),
-          border: Border.all(
-            color: Colors.grey,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.shade400,
-              blurRadius: 5,
-              offset: const Offset(2, 2),
-            )
-          ],
-        ),
-        child: IntrinsicHeight(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              controller.value.icon ??
-                  const Icon(
-                    FontAwesomeIcons.checkCircle,
-                    color: Colors.green,
-                    size: 50,
-                  ),
-              const SizedBox(
-                height: 20,
+        decoration: successMessageDecoration ??
+            BoxDecoration(
+              color: Colors.white,
+              borderRadius: const BorderRadius.all(Radius.circular(5)),
+              border: Border.all(
+                color: Colors.grey,
               ),
-              !controller.value.message!.contains("<div")
-                  ? Material(
-                      child: Text(
-                        controller.value.message ?? "Error",
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                  : Material(
-                      child: Container(
-                        height: 300,
-                        color: Colors.transparent,
-                        child: SingleChildScrollView(
-                          child: HtmlContentViewer(
-                            htmlContent: controller.value.message ?? "",
-                          ),
-                        ),
-                      ),
-                    ),
-            ],
-          ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.shade400,
+                  blurRadius: 5,
+                  offset: const Offset(2, 2),
+                )
+              ],
+            ),
+        child: IntrinsicHeight(
+          child: successMessageWidget != null
+              ? successMessageWidget?.call()
+              : centerStyleErrorMode(controller),
         ),
       ),
     );
@@ -198,63 +181,106 @@ class CircularLoaderComponent extends StatelessWidget {
   Widget messageError(BuildContext context) {
     controller.value.message ?? "Error";
     return Align(
-      alignment: Alignment.center,
+      alignment: errorMessageAlign,
       child: Container(
         margin: const EdgeInsets.only(left: 40, right: 40),
         padding: const EdgeInsets.all(15),
-        width: 400,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: const BorderRadius.all(Radius.circular(5)),
-          border: Border.all(
-            color: Colors.grey,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.shade400,
-              blurRadius: 5,
-              offset: const Offset(2, 2),
-            )
-          ],
-        ),
-        child: Material(
-          child: IntrinsicHeight(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                controller.value.icon ??
-                    const Icon(
-                      FontAwesomeIcons.timesCircle,
-                      color: Colors.red,
-                      size: 50,
-                    ),
-                const SizedBox(
-                  height: 20,
-                ),
-                controller.value.messageWidget != null
-                    ? controller.value.messageWidget!
-                    : !controller.value.message!.contains("<div")
-                        ? Text(
-                            controller.value.message ?? "Error",
-                            textAlign: TextAlign.center,
-                          )
-                        : Material(
-                            child: Container(
-                              height: 300,
-                              color: Colors.transparent,
-                              child: SingleChildScrollView(
-                                child: HtmlContentViewer(
-                                  htmlContent: controller.value.message ?? "",
-                                ),
-                              ),
-                            ),
-                          ),
+        width: errorMessageWidth,
+        decoration: errorMessageDecoration ??
+            BoxDecoration(
+              color: Colors.white,
+              borderRadius: const BorderRadius.all(Radius.circular(5)),
+              border: Border.all(
+                color: Colors.grey,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.shade400,
+                  blurRadius: 5,
+                  offset: const Offset(2, 2),
+                )
               ],
             ),
+        child: Material(
+          child: IntrinsicHeight(
+            child: errorMessageWidget != null
+                ? errorMessageWidget?.call()
+                : centerStyleErrorMode(controller),
           ),
         ),
       ),
+    );
+  }
+
+  static centerStyleErrorMode(CircularLoaderController controller) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        controller.value.icon ??
+            const Icon(
+              FontAwesomeIcons.timesCircle,
+              color: Colors.red,
+              size: 50,
+            ),
+        const SizedBox(
+          height: 20,
+        ),
+        controller.value.messageWidget != null
+            ? controller.value.messageWidget!
+            : !controller.value.message!.contains("<div")
+                ? Text(
+                    controller.value.message ?? "Error",
+                    textAlign: TextAlign.center,
+                  )
+                : Material(
+                    child: Container(
+                      height: 300,
+                      color: Colors.transparent,
+                      child: SingleChildScrollView(
+                        child: HtmlContentViewer(
+                          htmlContent: controller.value.message ?? "",
+                        ),
+                      ),
+                    ),
+                  ),
+      ],
+    );
+  }
+
+   static centerStyleMessageMode(CircularLoaderController controller) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        controller.value.icon ??
+            const Icon(
+              FontAwesomeIcons.checkCircle,
+              color: Colors.green,
+              size: 50,
+            ),
+        const SizedBox(
+          height: 20,
+        ),
+        controller.value.messageWidget != null
+            ? controller.value.messageWidget!
+            : !controller.value.message!.contains("<div")
+                ? Text(
+                    controller.value.message ?? "Error",
+                    textAlign: TextAlign.center,
+                  )
+                : Material(
+                    child: Container(
+                      height: 300,
+                      color: Colors.transparent,
+                      child: SingleChildScrollView(
+                        child: HtmlContentViewer(
+                          htmlContent: controller.value.message ?? "",
+                        ),
+                      ),
+                    ),
+                  ),
+      ],
     );
   }
 }
