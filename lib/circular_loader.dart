@@ -183,6 +183,8 @@ class CircularLoaderComponent extends StatelessWidget {
                         child: SingleChildScrollView(
                           child: HtmlContentViewer(
                             htmlContent: controller.value.message ?? "",
+                            initialContentHeight: 100,
+                            initialContentWidth: double.infinity,
                           ),
                         ),
                       ),
