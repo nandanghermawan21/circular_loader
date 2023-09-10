@@ -147,7 +147,8 @@ class CircularLoaderComponent extends StatelessWidget {
   Widget message(BuildContext context) {
     return Align(
       alignment: successMessageAlign ?? Alignment.center,
-      child: SafeArea(child: successMessageBuilder?.call(controller) ?? const SizedBox()),
+      child: SafeArea(
+          child: successMessageBuilder?.call(controller) ?? const SizedBox()),
     );
   }
 
@@ -204,6 +205,46 @@ class CircularLoaderComponent extends StatelessWidget {
                   ),
           ],
         ),
+      ),
+    );
+  }
+
+  static Widget messageSuccessNotifMode(CircularLoaderController controller) {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(
+          color: Colors.grey,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade400,
+            blurRadius: 5,
+            offset: const Offset(2, 2),
+          )
+        ],
+      ),
+      child: IntrinsicHeight(
+        child: !controller.value.message!.contains("<div")
+            ? Material(
+                child: Text(
+                  controller.value.message ?? "Error",
+                  textAlign: TextAlign.center,
+                ),
+              )
+            : Material(
+                child: Container(
+                  height: 300,
+                  color: Colors.transparent,
+                  child: SingleChildScrollView(
+                    child: HtmlContentViewer(
+                      htmlContent: controller.value.message ?? "",
+                    ),
+                  ),
+                ),
+              ),
       ),
     );
   }
