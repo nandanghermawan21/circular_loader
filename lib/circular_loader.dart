@@ -3,8 +3,8 @@ library circular_loader;
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:simple_html_css/simple_html_css.dart';
 
 class CircularLoaderComponent extends StatelessWidget {
   final CircularLoaderController controller;
@@ -23,16 +23,16 @@ class CircularLoaderComponent extends StatelessWidget {
   final Widget? loadingWidget;
   final Color? laodingBackgroundColor;
 
-  const CircularLoaderComponent({
-    Key? key,
-    required this.controller,
-    this.child,
-    this.cover = true,
-    this.loadingBuilder,
-    this.loadingDecoration,
-    this.loadingWidget,
-    this.laodingBackgroundColor
-  }) : super(key: key);
+  const CircularLoaderComponent(
+      {Key? key,
+      required this.controller,
+      this.child,
+      this.cover = true,
+      this.loadingBuilder,
+      this.loadingDecoration,
+      this.loadingWidget,
+      this.laodingBackgroundColor})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -181,11 +181,7 @@ class CircularLoaderComponent extends StatelessWidget {
                       height: 300,
                       color: Colors.transparent,
                       child: SingleChildScrollView(
-                        child: RichText(
-                          text: HTML.toTextSpan(
-                              context, controller.value.message ?? ""),
-                          maxLines: 4,
-                        ),
+                        child: HtmlWidget(controller.value.message ?? ""),
                       ),
                     ),
             ],
@@ -244,11 +240,8 @@ class CircularLoaderComponent extends StatelessWidget {
                             color: Colors.transparent,
                             child: Material(
                               child: SingleChildScrollView(
-                                child: RichText(
-                                  text: HTML.toTextSpan(
-                                      context, controller.value.message ?? ""),
-                                  maxLines: 4,
-                                ),
+                                child:
+                                    HtmlWidget(controller.value.message ?? ""),
                               ),
                             ),
                           ),
