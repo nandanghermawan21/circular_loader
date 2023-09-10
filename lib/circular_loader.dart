@@ -17,6 +17,7 @@ class CircularLoaderComponent extends StatelessWidget {
     fontWeight: FontWeight.normal,
   );
   final Alignment laodingAlign = Alignment.bottomCenter;
+  final EdgeInsetsGeometry laodingMargin = const EdgeInsets.only(bottom: 100, left: 10, right: 10, top: 10);
 
   const CircularLoaderComponent({
     Key? key,
@@ -75,7 +76,7 @@ class CircularLoaderComponent extends StatelessWidget {
       child: Align(
         alignment: laodingAlign,
         child: Container(
-          margin: const EdgeInsets.only(left: 40, right: 40),
+          margin: laodingMargin,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: const BorderRadius.all(Radius.circular(5)),
