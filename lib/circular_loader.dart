@@ -209,22 +209,16 @@ class CircularLoaderComponent extends StatelessWidget {
     );
   }
 
-  static Widget messageSuccessNotifMode(CircularLoaderController controller) {
+  static Widget messageSuccessNotifMode(
+    CircularLoaderController controller, {
+    Color? backgroundColor,
+    TextStyle? textStyle,
+  }) {
     return Container(
       padding: const EdgeInsets.all(10),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(
-          color: Colors.grey,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.shade400,
-            blurRadius: 5,
-            offset: const Offset(2, 2),
-          )
-        ],
+        color: backgroundColor ?? const Color.fromARGB(255, 4, 98, 7),
       ),
       child: IntrinsicHeight(
         child: !controller.value.message!.contains("<div")
@@ -232,6 +226,10 @@ class CircularLoaderComponent extends StatelessWidget {
                 child: Text(
                   controller.value.message ?? "Error",
                   textAlign: TextAlign.center,
+                  style: textStyle ?? const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.normal
+                  ),
                 ),
               )
             : Material(
@@ -331,13 +329,14 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
   void stopLoading({
     String? message,
     bool isError = false,
+    bool? cover,
     Icon? icon,
     Duration? duration,
     VoidCallback? onCloseCallBack,
     Widget? messageWidget,
   }) {
     value.onclosed = false;
-    onCloseCallback = onCloseCallBack;
+    value.onCloseCallback = onCloseCallBack;
     value.state = isError == true
         ? CircularLoaderState.showError
         : CircularLoaderState.showMessage;
@@ -398,6 +397,7 @@ class CircularLoaderValue {
   Widget? messageWidget;
   String? loadingMessage;
   bool onclosed = true;
+  VoidCallback? onCloseCallback;
 }
 
 enum CircularLoaderState {
