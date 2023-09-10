@@ -18,6 +18,9 @@ class CircularLoaderComponent extends StatelessWidget {
   final Decoration? loadingDecoration;
   final Widget? loadingWidget;
   final Color? laodingBackgroundColor;
+  //mode message success
+  final Alignment? successMessageAlign;
+  final WidgetFromDataBuilder<CircularLoaderController>? successMessageBuilder;
 
   const CircularLoaderComponent({
     Key? key,
@@ -35,6 +38,9 @@ class CircularLoaderComponent extends StatelessWidget {
     ),
     this.laodingAlign = Alignment.center,
     this.color = Colors.blue,
+    this.successMessageAlign,
+    this.successMessageBuilder =
+        CircularLoaderComponent.messageSuccessModalMode,
   }) : super(key: key);
 
   @override
@@ -140,59 +146,63 @@ class CircularLoaderComponent extends StatelessWidget {
 
   Widget message(BuildContext context) {
     return Align(
-      alignment: Alignment.center,
-      child: Container(
-        margin: const EdgeInsets.only(left: 40, right: 40),
-        padding: const EdgeInsets.all(15),
-        width: 400,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: const BorderRadius.all(Radius.circular(5)),
-          border: Border.all(
-            color: Colors.grey,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.shade400,
-              blurRadius: 5,
-              offset: const Offset(2, 2),
-            )
-          ],
+      alignment: successMessageAlign ?? Alignment.center,
+      child: successMessageBuilder?.call(controller),
+    );
+  }
+
+  static Widget messageSuccessModalMode(CircularLoaderController controller) {
+    return Container(
+      margin: const EdgeInsets.only(left: 40, right: 40),
+      padding: const EdgeInsets.all(15),
+      width: 400,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: const BorderRadius.all(Radius.circular(5)),
+        border: Border.all(
+          color: Colors.grey,
         ),
-        child: IntrinsicHeight(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              controller.value.icon ??
-                  const Icon(
-                    FontAwesomeIcons.checkCircle,
-                    color: Colors.green,
-                    size: 50,
-                  ),
-              const SizedBox(
-                height: 20,
-              ),
-              !controller.value.message!.contains("<div")
-                  ? Material(
-                      child: Text(
-                        controller.value.message ?? "Error",
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                  : Material(
-                      child: Container(
-                        height: 300,
-                        color: Colors.transparent,
-                        child: SingleChildScrollView(
-                          child: HtmlContentViewer(
-                            htmlContent: controller.value.message ?? "",
-                          ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade400,
+            blurRadius: 5,
+            offset: const Offset(2, 2),
+          )
+        ],
+      ),
+      child: IntrinsicHeight(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            controller.value.icon ??
+                const Icon(
+                  FontAwesomeIcons.checkCircle,
+                  color: Colors.green,
+                  size: 50,
+                ),
+            const SizedBox(
+              height: 20,
+            ),
+            !controller.value.message!.contains("<div")
+                ? Material(
+                    child: Text(
+                      controller.value.message ?? "Error",
+                      textAlign: TextAlign.center,
+                    ),
+                  )
+                : Material(
+                    child: Container(
+                      height: 300,
+                      color: Colors.transparent,
+                      child: SingleChildScrollView(
+                        child: HtmlContentViewer(
+                          htmlContent: controller.value.message ?? "",
                         ),
                       ),
                     ),
-            ],
-          ),
+                  ),
+          ],
         ),
       ),
     );
@@ -357,3 +367,4 @@ enum CircularLoaderState {
 }
 
 typedef ObjectBuilder<T> = T Function();
+typedef WidgetFromDataBuilder<T> = Widget Function(T value);
