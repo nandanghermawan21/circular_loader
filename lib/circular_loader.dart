@@ -12,22 +12,18 @@ class CircularLoaderComponent extends StatelessWidget {
   final bool cover;
   final ObjectBuilder<Widget>? loadingBuilder;
   final Color color = Colors.blue;
-  final TextStyle loadingMessageStyle = const TextStyle(
-    fontSize: 14,
-    fontWeight: FontWeight.normal,
-  );
+  final TextStyle? loadingMessageStyle;
   final Alignment laodingAlign = Alignment.bottomCenter;
-  final EdgeInsetsGeometry laodingMargin =
-      const EdgeInsets.only(bottom: 100, left: 10, right: 10, top: 10);
+  final EdgeInsetsGeometry? laodingMargin;
   final Decoration? loadingDecoration;
   final Widget? loadingWidget;
   final Color? laodingBackgroundColor;
   final Alignment errorMessageAlign = Alignment.center;
-  final double errorMessageWidth = 400;
+  final double? errorMessageWidth;
   final ObjectBuilder<Widget>? errorMessageWidget;
   final Decoration? errorMessageDecoration;
   final Alignment successMessageAlign = Alignment.center;
-  final double successMessageWidth = 400;
+  final double? successMessageWidth;
   final ObjectBuilder<Widget>? successMessageWidget;
   final Decoration? successMessageDecoration;
 
@@ -42,8 +38,16 @@ class CircularLoaderComponent extends StatelessWidget {
     this.laodingBackgroundColor,
     this.errorMessageDecoration,
     this.errorMessageWidget,
+    this.loadingMessageStyle = const TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.normal,
+    ),
     this.successMessageWidget,
     this.successMessageDecoration,
+    this.successMessageWidth = 400,
+    this.errorMessageWidth = 400,
+    this.laodingMargin =
+        const EdgeInsets.only(bottom: 100, left: 10, right: 10, top: 10),
   }) : super(key: key);
 
   @override
@@ -248,7 +252,7 @@ class CircularLoaderComponent extends StatelessWidget {
     );
   }
 
-   static centerStyleMessageMode(CircularLoaderController controller) {
+  static centerStyleMessageMode(CircularLoaderController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
