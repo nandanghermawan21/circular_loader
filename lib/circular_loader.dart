@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_html_css/simple_html_css.dart';
 
-
 class CircularLoaderComponent extends StatelessWidget {
   final CircularLoaderController controller;
   final Widget? child;
@@ -17,6 +16,7 @@ class CircularLoaderComponent extends StatelessWidget {
     fontSize: 14,
     fontWeight: FontWeight.normal,
   );
+  final Alignment laodingAlign = Alignment.bottomCenter;
 
   const CircularLoaderComponent({
     Key? key,
@@ -73,7 +73,7 @@ class CircularLoaderComponent extends StatelessWidget {
   Widget onLoading() {
     return Center(
       child: Align(
-        alignment: Alignment.center,
+        alignment: laodingAlign,
         child: Container(
           margin: const EdgeInsets.only(left: 40, right: 40),
           decoration: BoxDecoration(
@@ -345,4 +345,3 @@ enum CircularLoaderState {
 }
 
 typedef ObjectBuilder<T> = T Function();
-
