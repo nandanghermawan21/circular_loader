@@ -179,12 +179,11 @@ class CircularLoaderComponent extends StatelessWidget {
                     )
                   : Material(
                       child: Container(
+                        height: 300,
                         color: Colors.transparent,
                         child: SingleChildScrollView(
                           child: HtmlContentViewer(
                             htmlContent: controller.value.message ?? "",
-                            initialContentHeight: 100,
-                            initialContentWidth: double.infinity,
                           ),
                         ),
                       ),
