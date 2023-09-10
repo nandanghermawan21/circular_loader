@@ -13,16 +13,16 @@ class CircularLoaderComponent extends StatelessWidget {
   final ObjectBuilder<Widget>? loadingBuilder;
   final Color color = Colors.blue;
   final TextStyle? loadingMessageStyle;
-  final Alignment laodingAlign = Alignment.bottomCenter;
+  final Alignment laodingAlign;
   final EdgeInsetsGeometry? laodingMargin;
   final Decoration? loadingDecoration;
   final Widget? loadingWidget;
   final Color? laodingBackgroundColor;
-  final Alignment errorMessageAlign = Alignment.center;
+  final Alignment errorMessageAlign;
   final double? errorMessageWidth;
   final ObjectBuilder<Widget>? errorMessageWidget;
   final Decoration? errorMessageDecoration;
-  final Alignment successMessageAlign = Alignment.center;
+  final Alignment successMessageAlign;
   final double? successMessageWidth;
   final ObjectBuilder<Widget>? successMessageWidget;
   final Decoration? successMessageDecoration;
@@ -35,14 +35,17 @@ class CircularLoaderComponent extends StatelessWidget {
     this.loadingBuilder,
     this.loadingDecoration,
     this.loadingWidget,
+    this.laodingAlign = Alignment.center,
     this.laodingBackgroundColor,
     this.errorMessageDecoration,
     this.errorMessageWidget,
+    this.errorMessageAlign = Alignment.center,
     this.loadingMessageStyle = const TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.normal,
     ),
     this.successMessageWidget,
+    this.successMessageAlign = Alignment.center,
     this.successMessageDecoration,
     this.successMessageWidth = 400,
     this.errorMessageWidth = 400,
