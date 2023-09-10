@@ -157,29 +157,31 @@ class CircularLoaderComponent extends StatelessWidget {
   Widget message(BuildContext context) {
     return Align(
       alignment: successMessageAlign,
-      child: Container(
-        margin: const EdgeInsets.only(left: 40, right: 40),
-        padding: const EdgeInsets.all(15),
-        width: 400,
-        decoration: successMessageDecoration ??
-            BoxDecoration(
-              color: Colors.white,
-              borderRadius: const BorderRadius.all(Radius.circular(5)),
-              border: Border.all(
-                color: Colors.grey,
+      child: SafeArea(
+        child: Container(
+          margin: const EdgeInsets.only(left: 40, right: 40),
+          padding: const EdgeInsets.all(15),
+          width: 400,
+          decoration: successMessageDecoration ??
+              BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.all(Radius.circular(5)),
+                border: Border.all(
+                  color: Colors.grey,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.shade400,
+                    blurRadius: 5,
+                    offset: const Offset(2, 2),
+                  )
+                ],
               ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.shade400,
-                  blurRadius: 5,
-                  offset: const Offset(2, 2),
-                )
-              ],
-            ),
-        child: IntrinsicHeight(
-          child: successMessageWidget != null
-              ? successMessageWidget?.call()
-              : centerStyleMessageMode(controller),
+          child: IntrinsicHeight(
+            child: successMessageWidget != null
+                ? successMessageWidget?.call()
+                : centerStyleMessageMode(controller),
+          ),
         ),
       ),
     );
