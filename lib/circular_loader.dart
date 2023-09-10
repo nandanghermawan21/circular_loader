@@ -17,7 +17,10 @@ class CircularLoaderComponent extends StatelessWidget {
     fontWeight: FontWeight.normal,
   );
   final Alignment laodingAlign = Alignment.bottomCenter;
-  final EdgeInsetsGeometry laodingMargin = const EdgeInsets.only(bottom: 100, left: 10, right: 10, top: 10);
+  final EdgeInsetsGeometry laodingMargin =
+      const EdgeInsets.only(bottom: 100, left: 10, right: 10, top: 10);
+  final Decoration? loadingDecoration;
+  final Widget? loadingWidget;
 
   const CircularLoaderComponent({
     Key? key,
@@ -25,6 +28,8 @@ class CircularLoaderComponent extends StatelessWidget {
     this.child,
     this.cover = true,
     this.loadingBuilder,
+    this.loadingDecoration,
+    this.loadingWidget,
   }) : super(key: key);
 
   @override
@@ -77,35 +82,37 @@ class CircularLoaderComponent extends StatelessWidget {
         alignment: laodingAlign,
         child: Container(
           margin: laodingMargin,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: const BorderRadius.all(Radius.circular(5)),
-            border: Border.all(
-              color: Colors.grey,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.shade400,
-                blurRadius: 5,
-                offset: const Offset(2, 2),
-              )
-            ],
-          ),
+          decoration: loadingDecoration ??
+              BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.all(Radius.circular(5)),
+                border: Border.all(
+                  color: Colors.grey,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.shade400,
+                    blurRadius: 5,
+                    offset: const Offset(2, 2),
+                  )
+                ],
+              ),
           child: IntrinsicHeight(
             child: Material(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    height: 50,
-                    width: 50,
-                    padding: const EdgeInsets.all(10),
-                    color: Colors.transparent,
-                    child: CircularProgressIndicator(
-                      color: color,
-                      strokeWidth: 4,
-                    ),
-                  ),
+                  loadingWidget ??
+                      Container(
+                        height: 50,
+                        width: 50,
+                        padding: const EdgeInsets.all(10),
+                        color: Colors.transparent,
+                        child: CircularProgressIndicator(
+                          color: color,
+                          strokeWidth: 4,
+                        ),
+                      ),
                   controller.value.loadingMessage != null &&
                           controller.value.loadingMessage != ""
                       ? Container(
