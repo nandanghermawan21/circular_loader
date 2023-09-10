@@ -172,7 +172,7 @@ class CircularLoaderComponent extends StatelessWidget {
         child: IntrinsicHeight(
           child: successMessageWidget != null
               ? successMessageWidget?.call()
-              : centerStyleErrorMode(controller),
+              : centerStyleMessageMode(controller),
         ),
       ),
     );
