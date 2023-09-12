@@ -319,7 +319,7 @@ class CircularLoaderComponent extends StatelessWidget {
     );
   }
 
-  static Widget errorSuccessNotifMode(
+  static Widget messageErrorBuilder(
     CircularLoaderController controller, {
     Color? backgroundColor,
     TextStyle? textStyle,
