@@ -45,8 +45,7 @@ class CircularLoaderComponent extends StatelessWidget {
     this.successMessageBuilder =
         CircularLoaderComponent.messageSuccessModalMode,
     this.errorMessageAlign,
-    this.messageErrorBuilder =
-        CircularLoaderComponent.messageErrorModalMode,
+    this.messageErrorBuilder = CircularLoaderComponent.messageErrorModalMode,
   }) : super(key: key);
 
   @override
@@ -224,7 +223,7 @@ class CircularLoaderComponent extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: backgroundColor ?? const Color.fromARGB(255, 4, 98, 7),
+        color: backgroundColor ?? const Color.fromARGB(255, 241, 16, 8),
       ),
       child: IntrinsicHeight(
         child: !controller.value.message!.contains("<div")
@@ -316,6 +315,43 @@ class CircularLoaderComponent extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  static Widget errorSuccessNotifMode(
+    CircularLoaderController controller, {
+    Color? backgroundColor,
+    TextStyle? textStyle,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: backgroundColor ?? const Color.fromARGB(255, 4, 98, 7),
+      ),
+      child: IntrinsicHeight(
+        child: !controller.value.message!.contains("<div")
+            ? Material(
+                child: Text(
+                  controller.value.message ?? "Error",
+                  textAlign: TextAlign.center,
+                  style: textStyle ??
+                      const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.normal),
+                ),
+              )
+            : Material(
+                child: Container(
+                  height: 300,
+                  color: Colors.transparent,
+                  child: SingleChildScrollView(
+                    child: HtmlContentViewer(
+                      htmlContent: controller.value.message ?? "",
+                    ),
+                  ),
+                ),
+              ),
       ),
     );
   }
