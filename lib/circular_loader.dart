@@ -223,11 +223,12 @@ class CircularLoaderComponent extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: backgroundColor ?? const Color.fromARGB(255, 241, 16, 8),
+        color: backgroundColor ?? const Color.fromARGB(255, 15, 130, 3),
       ),
       child: IntrinsicHeight(
         child: !controller.value.message!.contains("<div")
             ? Material(
+                color: Colors.transparent,
                 child: Text(
                   controller.value.message ?? "Error",
                   textAlign: TextAlign.center,
@@ -237,6 +238,7 @@ class CircularLoaderComponent extends StatelessWidget {
                 ),
               )
             : Material(
+                color: Colors.transparent,
                 child: Container(
                   height: 300,
                   color: Colors.transparent,
@@ -319,7 +321,7 @@ class CircularLoaderComponent extends StatelessWidget {
     );
   }
 
-  static Widget messageErrorBuilder(
+  static Widget messageErrorNotifMode(
     CircularLoaderController controller, {
     Color? backgroundColor,
     TextStyle? textStyle,
@@ -328,11 +330,12 @@ class CircularLoaderComponent extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: backgroundColor ?? const Color.fromARGB(255, 4, 98, 7),
+        color: backgroundColor ?? const Color.fromARGB(255, 243, 5, 5),
       ),
       child: IntrinsicHeight(
         child: !controller.value.message!.contains("<div")
             ? Material(
+                color: Colors.transparent,
                 child: Text(
                   controller.value.message ?? "Error",
                   textAlign: TextAlign.center,
@@ -342,6 +345,7 @@ class CircularLoaderComponent extends StatelessWidget {
                 ),
               )
             : Material(
+                color: Colors.transparent,
                 child: Container(
                   height: 300,
                   color: Colors.transparent,
