@@ -23,7 +23,7 @@ class CircularLoaderComponent extends StatelessWidget {
   final WidgetFromDataBuilder<CircularLoaderController>? successMessageBuilder;
   //mode messae error
   final Alignment? errorMessageAlign;
-  final WidgetFromDataBuilder<CircularLoaderController>? messageErrorBuilder;
+  final WidgetFromDataBuilder<CircularLoaderController>? errorMessageBuilder;
 
   const CircularLoaderComponent({
     Key? key,
@@ -45,7 +45,7 @@ class CircularLoaderComponent extends StatelessWidget {
     this.successMessageBuilder =
         CircularLoaderComponent.messageSuccessModalMode,
     this.errorMessageAlign,
-    this.messageErrorBuilder = CircularLoaderComponent.messageErrorModalMode,
+    this.errorMessageBuilder = CircularLoaderComponent.messageErrorModalMode,
   }) : super(key: key);
 
   @override
@@ -256,7 +256,7 @@ class CircularLoaderComponent extends StatelessWidget {
     return Align(
       alignment: errorMessageAlign ?? Alignment.center,
       child: SafeArea(
-          child: messageErrorBuilder?.call(controller) ?? const SizedBox()),
+          child: errorMessageBuilder?.call(controller) ?? const SizedBox()),
     );
   }
 
