@@ -190,7 +190,7 @@ class CircularLoaderComponent extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            !controller.value.message!.contains("<div")
+            !(controller.value.message ?? "").contains("<div")
                 ? Material(
                     child: Text(
                       controller.value.message ?? "Error",
@@ -298,7 +298,7 @@ class CircularLoaderComponent extends StatelessWidget {
               ),
               controller.value.messageWidget != null
                   ? controller.value.messageWidget!
-                  : !controller.value.message!.contains("<div")
+                  : !(controller.value.message ?? "").contains("<div")
                       ? Text(
                           controller.value.message ?? "Error",
                           textAlign: TextAlign.center,
@@ -333,7 +333,7 @@ class CircularLoaderComponent extends StatelessWidget {
         color: backgroundColor ?? const Color.fromARGB(255, 243, 5, 5),
       ),
       child: IntrinsicHeight(
-        child: !controller.value.message!.contains("<div")
+        child: !(controller.value.message ?? "").contains("<div")
             ? Material(
                 color: Colors.transparent,
                 child: Text(
