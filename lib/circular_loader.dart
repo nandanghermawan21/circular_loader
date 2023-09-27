@@ -10,6 +10,7 @@ class CircularLoaderComponent extends StatelessWidget {
   final CircularLoaderController controller;
   final Widget? child;
   final bool cover;
+  final Color? coverColor;
   final ObjectBuilder<Widget>? loadingBuilder;
   final Color color;
   final TextStyle loadingMessageStyle;
@@ -30,6 +31,7 @@ class CircularLoaderComponent extends StatelessWidget {
     required this.controller,
     this.child,
     this.cover = true,
+    this.coverColor,
     this.laodingMargin = const EdgeInsets.all(20),
     this.loadingBuilder,
     this.loadingDecoration,
@@ -68,7 +70,7 @@ class CircularLoaderComponent extends StatelessWidget {
                   color: (cover && value.state != CircularLoaderState.idle) ==
                           false
                       ? null
-                      : Colors.grey.shade400.withOpacity(0.6),
+                      : coverColor ?? Colors.grey.shade400.withOpacity(0.6),
                   child: childBuilder(context, value.state),
                 )
               ],
