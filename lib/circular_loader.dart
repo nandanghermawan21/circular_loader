@@ -367,8 +367,6 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
   CircularLoaderController({CircularLoaderValue? value})
       : super(value ?? CircularLoaderValue());
 
-  VoidCallback? onCloseCallback;
-
   void startLoading({
     String? message,
   }) {
@@ -394,10 +392,9 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
         : CircularLoaderState.showMessage;
 
     if (duration != null) {
-      Timer.periodic(duration, (timer) {
-        timer.cancel();
-        if (onCloseCallback != null) {
-          onCloseCallback!();
+      Future.delayed(duration, () {
+        if (value.onCloseCallback != null) {
+          value.onCloseCallback!();
         }
         close();
       });
@@ -421,9 +418,9 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
   void close() {
     if (value.state == CircularLoaderState.onLoading) return;
     value.state = CircularLoaderState.idle;
-    if (onCloseCallback != null && value.onclosed == false) {
+    if (value.onCloseCallback != null && value.onclosed == false) {
       value.onclosed = true;
-      onCloseCallback!();
+      value.onCloseCallback!();
     }
     value.onclosed = true;
     commit();
