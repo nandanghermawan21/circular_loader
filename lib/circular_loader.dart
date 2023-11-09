@@ -431,6 +431,7 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
     return Future<T>.delayed(
       duration ?? const Duration(seconds: 3),
       () {
+        close();
         return onCloseCallBack!();
       },
     );
