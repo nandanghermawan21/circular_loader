@@ -407,6 +407,35 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
     commit();
   }
 
+  Future<T> stopLoadingAsync<T>({
+    String? message,
+    bool isError = false,
+    bool? cover,
+    Icon? icon,
+    Duration? duration,
+    Future<T> Function()? onCloseCallBack,
+    Widget? messageWidget,
+  }) {
+    value.onclosed = false;
+    value.onCloseCallback = onCloseCallBack;
+    value.state = isError == true
+        ? CircularLoaderState.showError
+        : CircularLoaderState.showMessage;
+
+    value.message = message;
+    value.icon = icon;
+    value.messageWidget = messageWidget;
+
+    commit();
+
+    return Future<T>.delayed(
+      duration ?? const Duration(seconds: 3),
+      () {
+        return onCloseCallBack!();
+      },
+    );
+  }
+
   void forceStop({String? message}) {
     value.message = message;
     value.messageWidget = null;
