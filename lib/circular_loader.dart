@@ -25,6 +25,7 @@ class CircularLoaderComponent extends StatelessWidget {
   //mode messae error
   final Alignment? errorMessageAlign;
   final WidgetFromDataBuilder<CircularLoaderController>? errorMessageBuilder;
+  final Alignment? warningMessageAlign;
   final WidgetFromDataBuilder<CircularLoaderController>? warningMessageBuilder;
 
   const CircularLoaderComponent({
@@ -49,6 +50,7 @@ class CircularLoaderComponent extends StatelessWidget {
         CircularLoaderComponent.messageSuccessModalMode,
     this.errorMessageAlign,
     this.errorMessageBuilder = CircularLoaderComponent.messageErrorModalMode,
+    this.warningMessageAlign,
     this.warningMessageBuilder =
         CircularLoaderComponent.messageWarningNotifMode,
   }) : super(key: key);
@@ -376,7 +378,7 @@ class CircularLoaderComponent extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: backgroundColor ?? const Color.fromARGB(189, 243, 211, 5),
+        color: backgroundColor ?? const Color.fromARGB(255, 154, 134, 4),
       ),
       child: IntrinsicHeight(
         child: !(controller.value.message ?? "").contains("<div")
@@ -409,7 +411,7 @@ class CircularLoaderComponent extends StatelessWidget {
   Widget messageWarning(BuildContext context) {
     controller.value.message ?? "Error";
     return Align(
-      alignment: errorMessageAlign ?? Alignment.center,
+      alignment: warningMessageAlign ?? Alignment.topCenter,
       child: SafeArea(
           child: warningMessageBuilder?.call(controller) ?? const SizedBox()),
     );
