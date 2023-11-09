@@ -25,6 +25,7 @@ class CircularLoaderComponent extends StatelessWidget {
   //mode messae error
   final Alignment? errorMessageAlign;
   final WidgetFromDataBuilder<CircularLoaderController>? errorMessageBuilder;
+  final WidgetFromDataBuilder<CircularLoaderController>? warningMessageBuilder;
 
   const CircularLoaderComponent({
     Key? key,
@@ -48,6 +49,8 @@ class CircularLoaderComponent extends StatelessWidget {
         CircularLoaderComponent.messageSuccessModalMode,
     this.errorMessageAlign,
     this.errorMessageBuilder = CircularLoaderComponent.messageErrorModalMode,
+    this.warningMessageBuilder =
+        CircularLoaderComponent.messageWarningNotifMode,
   }) : super(key: key);
 
   @override
@@ -91,6 +94,8 @@ class CircularLoaderComponent extends StatelessWidget {
         return messageError(context);
       case CircularLoaderState.showMessage:
         return message(context);
+      case CircularLoaderState.showWarning:
+        return messageWarning(context);
     }
   }
 
@@ -361,6 +366,54 @@ class CircularLoaderComponent extends StatelessWidget {
       ),
     );
   }
+
+  static Widget messageWarningNotifMode(
+    CircularLoaderController controller, {
+    Color? backgroundColor,
+    TextStyle? textStyle,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: backgroundColor ?? const Color.fromARGB(189, 243, 211, 5),
+      ),
+      child: IntrinsicHeight(
+        child: !(controller.value.message ?? "").contains("<div")
+            ? Material(
+                color: Colors.transparent,
+                child: Text(
+                  controller.value.message ?? "Error",
+                  textAlign: TextAlign.center,
+                  style: textStyle ??
+                      const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.normal),
+                ),
+              )
+            : Material(
+                color: Colors.transparent,
+                child: Container(
+                  height: 300,
+                  color: Colors.transparent,
+                  child: SingleChildScrollView(
+                    child: HtmlContentViewer(
+                      htmlContent: controller.value.message ?? "",
+                    ),
+                  ),
+                ),
+              ),
+      ),
+    );
+  }
+
+  Widget messageWarning(BuildContext context) {
+    controller.value.message ?? "Error";
+    return Align(
+      alignment: errorMessageAlign ?? Alignment.center,
+      child: SafeArea(
+          child: errorMessageBuilder?.call(controller) ?? const SizedBox()),
+    );
+  }
 }
 
 class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
@@ -410,6 +463,7 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
   Future<T> stopLoadingAsync<T>({
     String? message,
     bool isError = false,
+    bool isWarning = false,
     bool? cover,
     Icon? icon,
     Duration? duration,
@@ -421,6 +475,9 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
     value.state = isError == true
         ? CircularLoaderState.showError
         : CircularLoaderState.showMessage;
+
+    value.state =
+        isWarning == true ? CircularLoaderState.showWarning : value.state;
 
     value.message = message;
     value.icon = icon;
@@ -484,6 +541,7 @@ enum CircularLoaderState {
   onLoading,
   showError,
   showMessage,
+  showWarning,
 }
 
 typedef ObjectBuilder<T> = T Function();
