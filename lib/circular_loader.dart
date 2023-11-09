@@ -411,7 +411,7 @@ class CircularLoaderComponent extends StatelessWidget {
     return Align(
       alignment: errorMessageAlign ?? Alignment.center,
       child: SafeArea(
-          child: errorMessageBuilder?.call(controller) ?? const SizedBox()),
+          child: warningMessageBuilder?.call(controller) ?? const SizedBox()),
     );
   }
 }
