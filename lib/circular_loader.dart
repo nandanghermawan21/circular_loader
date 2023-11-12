@@ -448,6 +448,7 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
 
     if (duration != null) {
       Future.delayed(duration, () {
+        value.onclosed = true;
         if (value.onCloseCallback != null) {
           value.onCloseCallback!();
         }
@@ -473,7 +474,7 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
     Widget? messageWidget,
   }) {
     value.onclosed = false;
-    value.onCloseCallback = onCloseCallBack;
+    // value.onCloseCallback = onCloseCallBack;
     value.state = isError == true
         ? CircularLoaderState.showError
         : CircularLoaderState.showMessage;
