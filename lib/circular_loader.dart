@@ -448,11 +448,9 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
 
     if (duration != null) {
       Future.delayed(duration, () {
-        value.onclosed = true;
-        if (value.onCloseCallback != null) {
-          value.onCloseCallback!();
+        if (value.onclosed == false) {
+          close();
         }
-        close();
       });
     }
 
@@ -512,6 +510,7 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
       value.onclosed = true;
       value.onCloseCallback!();
     }
+    value.onCloseCallback = null;
     value.onclosed = true;
     commit();
   }
