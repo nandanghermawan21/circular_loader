@@ -434,6 +434,7 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
   void stopLoading({
     String? message,
     bool isError = false,
+    bool isWarning = false,
     bool? cover,
     Icon? icon,
     Duration? duration,
@@ -445,6 +446,8 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
     value.state = isError == true
         ? CircularLoaderState.showError
         : CircularLoaderState.showMessage;
+    value.state =
+        isWarning == true ? CircularLoaderState.showWarning : value.state;
 
     if (duration != null) {
       Future.delayed(duration, () {
