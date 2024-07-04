@@ -1,28 +1,21 @@
 name: circular_loader
 description: A new Flutter package project.
-version: 0.0.1
-homepage:
+version: 1.0.0
 
 environment:
-  sdk: '>=3.1.1 <4.0.0'
-  flutter: ">=1.17.0"
+  sdk: ">=3.4.3 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  font_awesome_flutter: ^9.2.0
-  flutter_super_html_viewer: ^0.1.0
-  
+  font_awesome_flutter: ^10.7.0
+  flutter_widget_from_html: ^0.15.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^4.0.0
 
-
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter packages.
 flutter:
 
   # To add assets to your package, add an assets section, like this:
