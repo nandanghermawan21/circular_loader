@@ -475,7 +475,7 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
     Widget? messageWidget,
   }) {
     value.onclosed = false;
-    // value.onCloseCallback = onCloseCallBack;
+    value.onCloseCallback = onCloseCallBack;
     value.state = isError == true
         ? CircularLoaderState.showError
         : CircularLoaderState.showMessage;
