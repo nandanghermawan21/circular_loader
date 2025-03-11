@@ -1,7 +1,4 @@
-library circular_loader;
-
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_super_html_viewer/flutter_super_html_viewer.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -29,7 +26,7 @@ class CircularLoaderComponent extends StatelessWidget {
   final WidgetFromDataBuilder<CircularLoaderController>? warningMessageBuilder;
 
   const CircularLoaderComponent({
-    Key? key,
+    super.key,
     required this.controller,
     this.child,
     this.cover = true,
@@ -53,7 +50,7 @@ class CircularLoaderComponent extends StatelessWidget {
     this.warningMessageAlign,
     this.warningMessageBuilder =
         CircularLoaderComponent.messageWarningNotifMode,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -72,12 +69,14 @@ class CircularLoaderComponent extends StatelessWidget {
               children: [
                 child ?? const SizedBox(),
                 Container(
-                  color: (cover && value.state != CircularLoaderState.idle) ==
-                          false
-                      ? null
-                      : coverColor ?? Colors.grey.shade400.withOpacity(0.6),
+                  color:
+                      (cover && value.state != CircularLoaderState.idle) ==
+                              false
+                          ? null
+                          : coverColor ??
+                              Colors.grey.shade400.withValues(alpha: 0.6),
                   child: childBuilder(context, value.state),
-                )
+                ),
               ],
             ),
           ),
@@ -107,19 +106,18 @@ class CircularLoaderComponent extends StatelessWidget {
         alignment: laodingAlign,
         child: Container(
           margin: laodingMargin,
-          decoration: loadingDecoration ??
+          decoration:
+              loadingDecoration ??
               BoxDecoration(
                 color: Colors.white,
                 borderRadius: const BorderRadius.all(Radius.circular(5)),
-                border: Border.all(
-                  color: Colors.grey,
-                ),
+                border: Border.all(color: Colors.grey),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.shade400,
                     blurRadius: 5,
                     offset: const Offset(2, 2),
-                  )
+                  ),
                 ],
               ),
           child: IntrinsicHeight(
@@ -142,13 +140,13 @@ class CircularLoaderComponent extends StatelessWidget {
                   controller.value.loadingMessage != null &&
                           controller.value.loadingMessage != ""
                       ? Container(
-                          margin: const EdgeInsets.all(10),
-                          child: Text(
-                            controller.value.loadingMessage ?? "",
-                            style: loadingMessageStyle,
-                          ),
-                        )
-                      : const SizedBox()
+                        margin: const EdgeInsets.all(10),
+                        child: Text(
+                          controller.value.loadingMessage ?? "",
+                          style: loadingMessageStyle,
+                        ),
+                      )
+                      : const SizedBox(),
                 ],
               ),
             ),
@@ -162,7 +160,8 @@ class CircularLoaderComponent extends StatelessWidget {
     return Align(
       alignment: successMessageAlign ?? Alignment.center,
       child: SafeArea(
-          child: successMessageBuilder?.call(controller) ?? const SizedBox()),
+        child: successMessageBuilder?.call(controller) ?? const SizedBox(),
+      ),
     );
   }
 
@@ -174,15 +173,13 @@ class CircularLoaderComponent extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: const BorderRadius.all(Radius.circular(5)),
-        border: Border.all(
-          color: Colors.grey,
-        ),
+        border: Border.all(color: Colors.grey),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.shade400,
             blurRadius: 5,
             offset: const Offset(2, 2),
-          )
+          ),
         ],
       ),
       child: IntrinsicHeight(
@@ -192,31 +189,29 @@ class CircularLoaderComponent extends StatelessWidget {
           children: [
             controller.value.icon ??
                 const Icon(
-                  FontAwesomeIcons.checkCircle,
+                  FontAwesomeIcons.circleCheck,
                   color: Colors.green,
                   size: 50,
                 ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             !(controller.value.message ?? "").contains("<div")
                 ? Material(
-                    child: Text(
-                      controller.value.message ?? "Error",
-                      textAlign: TextAlign.center,
-                    ),
-                  )
+                  child: Text(
+                    controller.value.message ?? "Error",
+                    textAlign: TextAlign.center,
+                  ),
+                )
                 : Material(
-                    child: Container(
-                      height: 300,
-                      color: Colors.transparent,
-                      child: SingleChildScrollView(
-                        child: HtmlContentViewer(
-                          htmlContent: controller.value.message ?? "",
-                        ),
+                  child: Container(
+                    height: 300,
+                    color: Colors.transparent,
+                    child: SingleChildScrollView(
+                      child: HtmlContentViewer(
+                        htmlContent: controller.value.message ?? "",
                       ),
                     ),
                   ),
+                ),
           ],
         ),
       ),
@@ -235,29 +230,33 @@ class CircularLoaderComponent extends StatelessWidget {
         color: backgroundColor ?? const Color.fromARGB(255, 15, 130, 3),
       ),
       child: IntrinsicHeight(
-        child: !controller.value.message!.contains("<div")
-            ? Material(
-                color: Colors.transparent,
-                child: Text(
-                  controller.value.message ?? "Error",
-                  textAlign: TextAlign.center,
-                  style: textStyle ??
-                      const TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.normal),
-                ),
-              )
-            : Material(
-                color: Colors.transparent,
-                child: Container(
-                  height: 300,
+        child:
+            !controller.value.message!.contains("<div")
+                ? Material(
                   color: Colors.transparent,
-                  child: SingleChildScrollView(
-                    child: HtmlContentViewer(
-                      htmlContent: controller.value.message ?? "",
+                  child: Text(
+                    controller.value.message ?? "Error",
+                    textAlign: TextAlign.center,
+                    style:
+                        textStyle ??
+                        const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.normal,
+                        ),
+                  ),
+                )
+                : Material(
+                  color: Colors.transparent,
+                  child: Container(
+                    height: 300,
+                    color: Colors.transparent,
+                    child: SingleChildScrollView(
+                      child: HtmlContentViewer(
+                        htmlContent: controller.value.message ?? "",
+                      ),
                     ),
                   ),
                 ),
-              ),
       ),
     );
   }
@@ -267,7 +266,8 @@ class CircularLoaderComponent extends StatelessWidget {
     return Align(
       alignment: errorMessageAlign ?? Alignment.center,
       child: SafeArea(
-          child: errorMessageBuilder?.call(controller) ?? const SizedBox()),
+        child: errorMessageBuilder?.call(controller) ?? const SizedBox(),
+      ),
     );
   }
 
@@ -279,15 +279,13 @@ class CircularLoaderComponent extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: const BorderRadius.all(Radius.circular(5)),
-        border: Border.all(
-          color: Colors.grey,
-        ),
+        border: Border.all(color: Colors.grey),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.shade400,
             blurRadius: 5,
             offset: const Offset(2, 2),
-          )
+          ),
         ],
       ),
       child: Material(
@@ -298,31 +296,29 @@ class CircularLoaderComponent extends StatelessWidget {
             children: [
               controller.value.icon ??
                   const Icon(
-                    FontAwesomeIcons.timesCircle,
+                    FontAwesomeIcons.circleXmark,
                     color: Colors.red,
                     size: 50,
                   ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               controller.value.messageWidget != null
                   ? controller.value.messageWidget!
                   : !(controller.value.message ?? "").contains("<div")
-                      ? Text(
-                          controller.value.message ?? "Error",
-                          textAlign: TextAlign.center,
-                        )
-                      : Material(
-                          child: Container(
-                            height: 300,
-                            color: Colors.transparent,
-                            child: SingleChildScrollView(
-                              child: HtmlContentViewer(
-                                htmlContent: controller.value.message ?? "",
-                              ),
-                            ),
-                          ),
+                  ? Text(
+                    controller.value.message ?? "Error",
+                    textAlign: TextAlign.center,
+                  )
+                  : Material(
+                    child: Container(
+                      height: 300,
+                      color: Colors.transparent,
+                      child: SingleChildScrollView(
+                        child: HtmlContentViewer(
+                          htmlContent: controller.value.message ?? "",
                         ),
+                      ),
+                    ),
+                  ),
             ],
           ),
         ),
@@ -342,29 +338,33 @@ class CircularLoaderComponent extends StatelessWidget {
         color: backgroundColor ?? const Color.fromARGB(255, 243, 5, 5),
       ),
       child: IntrinsicHeight(
-        child: !(controller.value.message ?? "").contains("<div")
-            ? Material(
-                color: Colors.transparent,
-                child: Text(
-                  controller.value.message ?? "Error",
-                  textAlign: TextAlign.center,
-                  style: textStyle ??
-                      const TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.normal),
-                ),
-              )
-            : Material(
-                color: Colors.transparent,
-                child: Container(
-                  height: 300,
+        child:
+            !(controller.value.message ?? "").contains("<div")
+                ? Material(
                   color: Colors.transparent,
-                  child: SingleChildScrollView(
-                    child: HtmlContentViewer(
-                      htmlContent: controller.value.message ?? "",
+                  child: Text(
+                    controller.value.message ?? "Error",
+                    textAlign: TextAlign.center,
+                    style:
+                        textStyle ??
+                        const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.normal,
+                        ),
+                  ),
+                )
+                : Material(
+                  color: Colors.transparent,
+                  child: Container(
+                    height: 300,
+                    color: Colors.transparent,
+                    child: SingleChildScrollView(
+                      child: HtmlContentViewer(
+                        htmlContent: controller.value.message ?? "",
+                      ),
                     ),
                   ),
                 ),
-              ),
       ),
     );
   }
@@ -381,29 +381,33 @@ class CircularLoaderComponent extends StatelessWidget {
         color: backgroundColor ?? const Color.fromARGB(255, 154, 134, 4),
       ),
       child: IntrinsicHeight(
-        child: !(controller.value.message ?? "").contains("<div")
-            ? Material(
-                color: Colors.transparent,
-                child: Text(
-                  controller.value.message ?? "Error",
-                  textAlign: TextAlign.center,
-                  style: textStyle ??
-                      const TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.normal),
-                ),
-              )
-            : Material(
-                color: Colors.transparent,
-                child: Container(
-                  height: 300,
+        child:
+            !(controller.value.message ?? "").contains("<div")
+                ? Material(
                   color: Colors.transparent,
-                  child: SingleChildScrollView(
-                    child: HtmlContentViewer(
-                      htmlContent: controller.value.message ?? "",
+                  child: Text(
+                    controller.value.message ?? "Error",
+                    textAlign: TextAlign.center,
+                    style:
+                        textStyle ??
+                        const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.normal,
+                        ),
+                  ),
+                )
+                : Material(
+                  color: Colors.transparent,
+                  child: Container(
+                    height: 300,
+                    color: Colors.transparent,
+                    child: SingleChildScrollView(
+                      child: HtmlContentViewer(
+                        htmlContent: controller.value.message ?? "",
+                      ),
                     ),
                   ),
                 ),
-              ),
       ),
     );
   }
@@ -413,18 +417,17 @@ class CircularLoaderComponent extends StatelessWidget {
     return Align(
       alignment: warningMessageAlign ?? Alignment.topCenter,
       child: SafeArea(
-          child: warningMessageBuilder?.call(controller) ?? const SizedBox()),
+        child: warningMessageBuilder?.call(controller) ?? const SizedBox(),
+      ),
     );
   }
 }
 
 class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
   CircularLoaderController({CircularLoaderValue? value})
-      : super(value ?? CircularLoaderValue());
+    : super(value ?? CircularLoaderValue());
 
-  void startLoading({
-    String? message,
-  }) {
+  void startLoading({String? message}) {
     value.onclosed = false;
     value.state = CircularLoaderState.onLoading;
     value.loadingMessage = message;
@@ -443,9 +446,10 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
   }) {
     value.onclosed = false;
     value.onCloseCallback = onCloseCallBack;
-    value.state = isError == true
-        ? CircularLoaderState.showError
-        : CircularLoaderState.showMessage;
+    value.state =
+        isError == true
+            ? CircularLoaderState.showError
+            : CircularLoaderState.showMessage;
     value.state =
         isWarning == true ? CircularLoaderState.showWarning : value.state;
 
@@ -476,9 +480,10 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
   }) {
     value.onclosed = false;
     value.onCloseCallback = onCloseCallBack;
-    value.state = isError == true
-        ? CircularLoaderState.showError
-        : CircularLoaderState.showMessage;
+    value.state =
+        isError == true
+            ? CircularLoaderState.showError
+            : CircularLoaderState.showMessage;
 
     value.state =
         isWarning == true ? CircularLoaderState.showWarning : value.state;
@@ -489,13 +494,10 @@ class CircularLoaderController extends ValueNotifier<CircularLoaderValue> {
 
     commit();
 
-    return Future<T>.delayed(
-      duration ?? const Duration(seconds: 3),
-      () {
-        close();
-        return onCloseCallBack!();
-      },
-    );
+    return Future<T>.delayed(duration ?? const Duration(seconds: 3), () {
+      close();
+      return onCloseCallBack!();
+    });
   }
 
   void forceStop({String? message}) {
